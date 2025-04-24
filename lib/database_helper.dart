@@ -2,34 +2,32 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class DatabaseHelper {
-  static final DatabaseHelper instance = DatabaseHelper._init();
-  static Database? _database;
+  static final DatabaseHelper _instance = DatabaseHelper._internal();
+  factory DatabaseHelper() => _instance;
+  DatabaseHelper._internal();
 
-  DatabaseHelper._init();
+  Database? _database;
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('products.db');
+    _database = await initDb();
     return _database!;
   }
 
-  Future<Database> _initDB(String filePath) async {
-    final path = join(await getDatabasesPath(), filePath);
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+  Future<Database> initDb() async {
+    String path = join(await getDatabasesPath(), 'products.db');
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: (db, version) {
+        db.execute('CREATE TABLE products(id INTEGER PRIMARY KEY, name TEXT, price REAL)');
+      },
+    );
   }
 
-  Future _createDB(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE products (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL
-      )
-    ''');
-  }
-
-  Future<void> insertProduct(String name) async {
+  Future<void> insertProduct(Map<String, dynamic> product) async {
     final db = await database;
-    await db.insert('products', {'name': name});
+    await db.insert('products', product);
   }
 
   Future<List<Map<String, dynamic>>> getProducts() async {
@@ -40,10 +38,5 @@ class DatabaseHelper {
   Future<void> deleteProduct(int id) async {
     final db = await database;
     await db.delete('products', where: 'id = ?', whereArgs: [id]);
-  }
-
-  Future<void> clearDatabase() async {
-    final db = await database;
-    await db.delete('products');
   }
 }
