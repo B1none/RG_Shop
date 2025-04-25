@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lab1_flutter_app/animated_menu.dart';
 import 'catalog_screen.dart';
 import 'cart_screen.dart';
 import 'login_screen.dart';
@@ -85,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         controller: _tabController,
         children: [
           CatalogScreen(),
-          Center(child: Text('Анімоване меню')), // замінити на AnimatedMenuScreen()
+          AnimatedMenu(),
           CartScreen(),
         ],
       ),

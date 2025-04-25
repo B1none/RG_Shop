@@ -8,18 +8,25 @@ class AnimatedMenu extends StatefulWidget {
 class _AnimatedMenuState extends State<AnimatedMenu> 
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _animation;
-  bool _imageError = false;
+  late Animation<double> _scaleAnimation;
 
   @override
   void initState() {
     super.initState();
+    
+    // Ініціалізація контролера анімації
     _controller = AnimationController(
-      duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 3),
       vsync: this,
     )..repeat(reverse: true);
 
-    _animation = Tween<double>(begin: 0.3, end: 1).animate(_controller);
+    // Анімація масштабу
+    _scaleAnimation = Tween<double>(begin: 1.05, end: 1.1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOutSine,
+      ),
+    );
   }
 
   @override
@@ -31,41 +38,28 @@ class _AnimatedMenuState extends State<AnimatedMenu>
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: FadeTransition(
-        opacity: _animation,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (_imageError)
-              Icon(Icons.error, size: 100, color: Colors.red)
-            else
-              Image.network(
-                'https://i.pinimg.com/736x/b6/2c/1e/b62c1ec9d6e519e46c914fef73da0086.jpg',
-                width: 250,
-                fit: BoxFit.cover,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return CircularProgressIndicator(
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes!
-                        : null,
-                  );
-                },
-                errorBuilder: (context, error, stackTrace) {
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    if (mounted) setState(() => _imageError = true);
-                  });
-                  return Icon(Icons.error, size: 100, color: Colors.red);
-                },
-              ),
-            const SizedBox(height: 20),
-            const Text(
-              'Анімоване меню',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) {
+              return Transform.scale(
+                scale: _scaleAnimation.value, // Параметр масштабування
+                child: Image.asset( // Це віджет, який масштабується
+                  'assets/RG_Shop.png',
+                  width: 400,
+                  height: 400,
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 20),
+          const Text(
+            '',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+        ],
       ),
     );
   }
