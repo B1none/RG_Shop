@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'cart_provider.dart';
 
-class CatalogScreen extends StatelessWidget {
-  final List<Map<String, dynamic>> products = [
+class CatalogScreen extends StatefulWidget {
+  @override
+  _CatalogScreenState createState() => _CatalogScreenState();
+}
+
+class _CatalogScreenState extends State<CatalogScreen> {
+  final List<Map<String, dynamic>> _allProducts = [
     {
       'id': '1',
       'name': 'Тапки Раяна Гослінга',
@@ -24,6 +29,32 @@ class CatalogScreen extends StatelessWidget {
     },
   ];
 
+  List<Map<String, dynamic>> _filteredProducts = [];
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _filteredProducts = _allProducts;
+    _searchController.addListener(_filterProducts);
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _filterProducts() {
+    final query = _searchController.text.toLowerCase();
+    setState(() {
+      _filteredProducts = _allProducts.where((product) {
+        final name = product['name'].toString().toLowerCase();
+        return name.contains(query);
+      }).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,60 +65,91 @@ class CatalogScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                final product = products[index];
-                return Draggable<Map<String, dynamic>>(
-                  data: product,
-                  feedback: Material(
-                    child: Container(
-                      width: 200,
-                      padding: EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.blueGrey[800]!.withOpacity(0.9),
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 8,
-                            offset: Offset(0, 4),
-                        )],
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              product['image'],
-                              height: 80,
-                              width: 80,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            product['name'],
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  childWhenDragging: Opacity(
-                    opacity: 0.5,
-                    child: _buildProductCard(product),
-                  ),
-                  child: _buildProductCard(product),
-                );
-              },
+          // Пошукове поле
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Пошук товарів...',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                contentPadding: EdgeInsets.symmetric(vertical: 12),
+              ),
             ),
+          ),
+          Expanded(
+            child: _filteredProducts.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.search_off, size: 60, color: Colors.grey[400]),
+                        SizedBox(height: 16),
+                        Text(
+                          'Товарів не знайдено',
+                          style: TextStyle(fontSize: 20, color: Colors.grey[600]),
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: _filteredProducts.length,
+                    itemBuilder: (context, index) {
+                      final product = _filteredProducts[index];
+                      return Draggable<Map<String, dynamic>>(
+                        data: product,
+                        feedback: Material(
+                          child: Container(
+                            width: 200,
+                            padding: EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.blueGrey[800]!.withOpacity(0.9),
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 8,
+                                  offset: Offset(0, 4),
+                              )],
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image.asset(
+                                    product['image'],
+                                    height: 80,
+                                    width: 80,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  product['name'],
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        childWhenDragging: Opacity(
+                          opacity: 0.5,
+                          child: _buildProductCard(product),
+                        ),
+                        child: _buildProductCard(product),
+                      );
+                    },
+                  ),
           ),
           _buildDragTarget(context),
         ],
