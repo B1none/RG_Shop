@@ -27,6 +27,72 @@ class _CatalogScreenState extends State<CatalogScreen> {
       'price': 120.0,
       'image': 'assets/battery.jpg'
     },
+    {
+      'id': '4',
+      'name': 'Докімакура Раян Гослінг',
+      'price': 120000.0,
+      'image': 'assets/Big_RG.webp'
+    },
+    {
+      'id': '5',
+      'name': 'Докімакура Друг Раян Гослінг',
+      'price': 14000.0,
+      'image': 'assets/BigBeer.jpg'
+    },
+    {
+      'id': '6',
+      'name': 'Раян Гослінг на застілля (1 Година)',
+      'price': 40000.0,
+      'image': 'assets/Chill.jpg'
+    },
+    {
+      'id': '7',
+      'name': 'Новорічна подушка з Раяном Гослінгом',
+      'price': 3000.0,
+      'image': 'assets/CristmassRG.jpg'
+    },
+    {
+      'id': '8',
+      'name': 'Червоний костюм Раяна Гослінга',
+      'price': 21999.0,
+      'image': 'assets/RedShweps.jpg'
+    },
+    {
+      'id': '9',
+      'name': 'Привітання на замовлення',
+      'price': 4999.0,
+      'image': 'assets/RGBirthday.jpg'
+    },
+    {
+      'id': '10',
+      'name': 'Іграшка "Машинка Раян Гослінг"',
+      'price': 799.0,
+      'image': 'assets/RGCar.jpg'
+    },
+    {
+      'id': '11',
+      'name': 'Подушка "Раян Гослінг Сігма"',
+      'price': 2299.0,
+      'image': 'assets/RGGeneral.jpg'
+    },
+    {
+      'id': '12',
+      'name': 'Іграшка "Раян Гослінг Міньйон"',
+      'price': 1299.0,
+      'image': 'assets/RGMinion.jpg'
+    },
+    {
+      'id': '13',
+      'name': 'Жовтий костюм Раяна Гослінга',
+      'price': 22999.0,
+      'image': 'assets/Shweps.jpg'
+    },
+    {
+      'id': '14',
+      'name': 'Подушка "Справжній Сігма"',
+      'price': 9999.0,
+      'image': 'assets/TrueRG.jpg'
+    },
   ];
 
   List<Map<String, dynamic>> _filteredProducts = [];
