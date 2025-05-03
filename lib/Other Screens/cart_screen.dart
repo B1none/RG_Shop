@@ -52,7 +52,7 @@ class _CartScreenState extends State<CartScreen> {
       ),
     );
   }
-
+// При порожньому кошику
   Widget _buildEmptyCart() {
     return Center(
       child: Column(
@@ -70,7 +70,7 @@ class _CartScreenState extends State<CartScreen> {
       ),
     );
   }
-
+// Відображення товарів
   Widget _buildCartItem(Map<String, dynamic> item, CartProvider cartProvider) {
     return Dismissible(
       key: Key(item['id']),
@@ -250,7 +250,7 @@ class _CartScreenState extends State<CartScreen> {
             ],
           ),
           const SizedBox(height: 16),
-          SizedBox(
+          SizedBox( // Кнопка Оформити Замовлення
             width: double.infinity,
             height: 50,
             child: ElevatedButton(

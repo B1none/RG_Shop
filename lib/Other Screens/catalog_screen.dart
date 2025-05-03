@@ -163,7 +163,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                       ],
                     ),
                   )
-                : ListView.builder(
+                : ListView.builder( // Вдображення товарів (Ліст)
                     itemCount: _filteredProducts.length,
                     itemBuilder: (context, index) {
                       final product = _filteredProducts[index];

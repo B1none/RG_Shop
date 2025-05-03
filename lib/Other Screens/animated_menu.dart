@@ -46,7 +46,7 @@ class _AnimatedMenuState extends State<AnimatedMenu>
             builder: (context, child) {
               return Transform.scale(
                 scale: _scaleAnimation.value, // Параметр масштабування
-                child: Image.asset( // Це віджет, який масштабується
+                child: Image.asset( 
                   'assets/RG_Shop.png',
                   width: 400,
                   height: 400,

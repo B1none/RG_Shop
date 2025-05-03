@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:lab1_flutter_app/animated_menu.dart';
-import 'catalog_screen.dart';
-import 'cart_screen.dart';
-import 'login_screen.dart';
+import 'package:lab1_flutter_app/Other%20Screens/animated_menu.dart';
+import '../Other Screens/catalog_screen.dart';
+import '../Other Screens/cart_screen.dart';
+import '../First screens/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
