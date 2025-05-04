@@ -286,6 +286,31 @@ class _LoginScreenState extends State<LoginScreen> {
               minimumSize: Size(double.infinity, 50),
             ),
           ),
+          TextButton(
+            onPressed: () {
+              setState(() {
+                _showRegistration = false; // Перемикаємо на форму входу
+                // Очищаємо поля реєстрації
+                _registerEmailController.clear();
+                _registerPasswordController.clear();
+                _registerConfirmPasswordController.clear();
+              });
+            },
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.zero, // Відступи всередині кнопки
+            ),
+            child: RichText(
+              text: TextSpan(
+                style: TextStyle(
+                  fontSize: 16,
+                  color: const Color.fromARGB(255, 85, 40, 140),
+                ),
+                children: [
+                  TextSpan(text: 'Є акаунт? Увійти'),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );

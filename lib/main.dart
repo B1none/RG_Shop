@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import '../Other Screens/cart_provider.dart';
-import 'login_screen.dart';
-import 'home_screen.dart';
-import 'splash_screen.dart'; // Додано імпорт сплеш-скріна
+import 'Other Screens/cart_provider.dart';
+import 'First screens/login_screen.dart';
+import 'First screens/home_screen.dart';
+import 'First screens/splash_screen.dart'; // Додано імпорт сплеш-скріна
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
