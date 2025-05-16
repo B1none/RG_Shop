@@ -194,12 +194,24 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: InputDecoration(labelText: 'Пароль'),
           obscureText: true,
         ),
-        CheckboxListTile(
-          title: Text('Запам\'ятати мене'),
-          value: _rememberMe,
-          onChanged: (value) => setState(() => _rememberMe = value ?? false),
-          contentPadding: EdgeInsets.zero,
-          controlAffinity: ListTileControlAffinity.leading,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Запам\'ятати мене',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
+            Switch(
+              value: _rememberMe,
+              onChanged: (value) => setState(() => _rememberMe = value),
+              activeColor: Colors.blueGrey[800], // Колір увімкненого стану
+              activeTrackColor: Colors.blueGrey[300], // Колір доріжки увімкненого стану
+              inactiveThumbColor: Colors.grey[400], // Колір вимкненого стану
+              inactiveTrackColor: Colors.grey[300], // Колір доріжки вимкненого стану
+            ),
+          ],
         ),
         SizedBox(height: 30),
         if (_isLoading)

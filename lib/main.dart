@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: (settings) {
           // Обробка неіснуючих маршрутів
           return MaterialPageRoute(
-            builder: (context) => Scaffold(
+            builder: (context) => Scaffold( 
               body: Center(
                 child: Text('Сторінка не знайдена'),
               ),

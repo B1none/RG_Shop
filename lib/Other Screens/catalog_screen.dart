@@ -127,7 +127,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
       appBar: AppBar(
         title: Text('Каталог товарів'),
         centerTitle: true,
-        backgroundColor: Colors.blueGrey[800],
+        backgroundColor: const Color.fromARGB(255, 219, 223, 224),
       ),
       body: Column(
         children: [
